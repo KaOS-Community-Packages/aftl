@@ -12,7 +12,7 @@ md5sums=('SKIP')
 
 prepare() {
 	cd "${srcdir}/android-file-transfer-linux"
-	mkdir build
+	mkdir -p build
 }
 
 build() {
