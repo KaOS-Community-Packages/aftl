@@ -1,5 +1,5 @@
 pkgname=aftl
-pkgver=3.1.70.fde9cbb
+pkgver=3.1.fde9cbb
 pkgrel=1
 pkgdesc="Android file transfer for linux is a mtp client for android devices"
 url="https://github.com/whoozle/android-file-transfer-linux"
@@ -11,17 +11,17 @@ source=('git+https://github.com/whoozle/android-file-transfer-linux.git#commit=f
 md5sums=('SKIP')
 
 prepare() {
-	cd "${srcdir}/android-file-transfer-linux"
-	mkdir -p build
+    cd "${srcdir}/android-file-transfer-linux"
+    mkdir -p build
 }
 
 build() {
     cd "${srcdir}/android-file-transfer-linux/build"
-	cmake ..
-	make
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+    make
 }
 
 package() {
     cd "${srcdir}/android-file-transfer-linux/build"
-	make DESTDIR="${pkgdir}/" install
+    make DESTDIR="${pkgdir}/" install
 }
