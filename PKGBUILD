@@ -1,29 +1,41 @@
 pkgname=aftl
-pkgver=3.0.70
+_pkgfullname=android-file-transfer-linux
+pkgver=3.2
 pkgrel=1
-epoch=1
-_commit=fde9cbb6887da15c3bc2ccf1884ceb873067d79a
 pkgdesc="Android file transfer for linux is a mtp client for android devices"
-url="https://github.com/whoozle/android-file-transfer-linux"
+url="https://github.com/whoozle/${_pkgfullname}"
 license=('GPL')
 arch=('x86_64')
-depends=('readline' 'qt5-base' 'fuse')
-makedepends=('cmake')
-source=("aftl.zip::https://github.com/whoozle/android-file-transfer-linux/archive/{$_commit}.zip")
-md5sums=('e8ac764433f8e25b2634d4fd367ee951')
+depends=(
+    'fuse'
+    'gcc'
+    'glibc'
+    'imagemagick'
+    'libusb'
+    'linux-api-headers'
+    'qt5-base'
+    'readline'
+    'vc'
+)
+makedepends=(
+    'cmake'
+    'make'
+)
+source=("${pkgname}.zip::${url}/archive/v${pkgver}.zip")
+md5sums=('1528580e469508a89619113d49fa8cc5')
 
 prepare() {
-    cd "${srcdir}/android-file-transfer-linux-${_commit}"
+    cd "${srcdir}/${_pkgfullname}-${pkgver}"
     mkdir -p build
 }
 
 build() {
-    cd "${srcdir}/android-file-transfer-linux-${_commit}/build"
+    cd "${srcdir}/${_pkgfullname}-${pkgver}/build"
     cmake .. -DCMAKE_INSTALL_PREFIX=/usr
     make
 }
 
 package() {
-    cd "${srcdir}/android-file-transfer-linux-${_commit}/build"
-    make DESTDIR="${pkgdir}/" install
+    cd "${srcdir}/${_pkgfullname}-${pkgver}/build"
+    make DESTDIR="${pkgdir}" install
 }
